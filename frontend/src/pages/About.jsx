@@ -42,7 +42,7 @@ export default function About() {
               Tecnologias utilizadas
             </p>
             <p className="text-gray-700">
-              Python, TensorFlow, FastAPI, React.js e outras.
+              Python, TensorFlow, FastAPI, React.js e outras. Além de modelo treinado com EfficientNetV2.
             </p>
           </div>
         </div>

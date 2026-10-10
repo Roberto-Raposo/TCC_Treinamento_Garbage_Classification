@@ -43,7 +43,7 @@ classifier = GarbageClassifier()
 
 @app.get("/health", response_model=HealthResponse, tags=["Status"])
 def health_check():
-    """Endpoint simples para verificar se a API está no ar e o modelo carregado."""
+    """Endpoint para verificar se a API está no ar e o modelo carregado."""
     return HealthResponse(status="ok", model_loaded=classifier.model is not None)
 
 
