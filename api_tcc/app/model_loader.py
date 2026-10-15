@@ -24,15 +24,6 @@ class GarbageClassifier:
         self.model = tf.keras.models.load_model(model_path)
         print("Modelo carregado com sucesso!")
 
-    def preprocess_image(self, image_bytes: bytes) -> np.ndarray:
-        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        image = image.resize(self.image_size)
-
-        image_array = np.array(image, dtype=np.float32)
-        image_array = np.expand_dims(image_array, axis=0)
-
-        return image_array
-
     def predict(self, image_bytes: bytes) -> dict:
         image_array = self.preprocess_image(image_bytes)
 
@@ -53,3 +44,21 @@ class GarbageClassifier:
             "confianca": round(confidence * 100, 2),
             "probabilidades": all_probabilities,
         }
+    
+    def preprocess_image(self, image_bytes: bytes) -> np.ndarray:
+        image = tf.io.decode_image(
+            image_bytes,
+            channels=3,
+            expand_animations=False
+        )
+
+        image = tf.image.resize(
+            image,
+            self.image_size,
+            method="bilinear"
+        )
+
+        image = tf.expand_dims(image, axis=0)
+
+        return image.numpy()
+
